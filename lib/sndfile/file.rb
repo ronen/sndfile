@@ -57,30 +57,21 @@ module Sndfile
       @sfinfo[:channels]
     end
 
-    def read(n, opts={})
-      opts = opts.keyword_args(
-        :type => {:valid => [:short, :int, :float, :double], :default => :double},
-      )
+    def read(n)
 
-      buf = FFI::Buffer.alloc_out(opts.type, n*channels)
-      count = send "sf_readf_#{opts.type}", @sfpointer, buf, n
+      buf = GSLng::Matrix.new(n, channels)
+
+      count = sf_readf_double @sfpointer, buf.data_ptr, n
       check_error
-      if count == 0
-        nil
-      else
-        buf.send "read_array_of_#{opts.type}", count*channels
+      case count
+      when 0 then nil
+      when n then buf
+      else buf.view(0, 0, count, channels)
       end
     end
 
-    def write(data)
-      n = data.length / channels
-      type = case data[0]
-             when Float then :double
-             else :int
-             end
-      buf = FFI::Buffer.alloc_in(type, data.length)
-      buf.send "write_array_of_#{type}", data
-      send "sf_writef_#{type}", @sfpointer, buf, data.length/channels
+    def write(buf)
+      sf_writef_double @sfpointer, buf.data_ptr, buf.frames
       check_error
     end
 

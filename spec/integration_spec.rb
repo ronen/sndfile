@@ -10,7 +10,7 @@ describe "Integration" do
 
     fin = Sndfile::File.open(inpath)
     Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.samplerate) do |fout|
-      while data = fin.read(10000)
+      while data = fin.read(12345)
         fout.write(data)
       end
       system("cmp #{outpath} #{refpath}").should be_true
@@ -33,7 +33,7 @@ describe "Integration" do
       while true
         a = fin1.read(10000)
         b = fin2.read(10000)
-        b = b.each_with_object(0).to_a.flatten if b
+        b = b * GSLng::Matrix.from_array([[1,0]]) if b
         case
         when a.nil? && b.nil?
           break
@@ -41,27 +41,33 @@ describe "Integration" do
           r = b
         when b.nil?
           r = a
+        when a.frames > b.frames
+          r = a
+          r.view(0, 0, b.frames, 2).add! b
+        when b.frames > a.frames
+          r = b
+          r.view(0, 0, a.frames, 2).add! a
         else
-          r = a.zip(b).map{|ai, bi| (ai||0) + (bi||0)}
+          r = a
+          r.add! b
         end
-        fout.write(r.flatten)
+        fout.write(r)
       end
       system("cmp #{outpath} #{refpath}").should be_true
     end
   end
 
-  it "should read & write integers" do
+  it "should multiply data by a scalar" do
     inpath = in_path("ComputerMagic.wav")
-    outpath, refpath = out_ref_paths("halfint.wav")
+    outpath, refpath = out_ref_paths("half.wav")
 
     fin = Sndfile::File.open(inpath)
     Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.samplerate) do |fout|
-      while data = fin.read(10000, :type => :int)
-        fout.write(data.map{|x| x >> 1})
+      while data = fin.read(10000)
+        fout.write(data * 0.5)
       end
       system("cmp #{outpath} #{refpath}").should be_true
     end
   end
-
 
 end

@@ -53,42 +53,42 @@ module Sndfile
     # sf_count_t  sf_read_int      (SNDFILE *sndfile, int *ptr, sf_count_t items) ;
     # sf_count_t  sf_read_float    (SNDFILE *sndfile, float *ptr, sf_count_t items) ;
     # sf_count_t  sf_read_double   (SNDFILE *sndfile, double *ptr, sf_count_t items) ;
-    attach_function :sf_read_short,    [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_read_int,      [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_read_float,    [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_read_double,   [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
+    attach_function :sf_read_short,    [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_read_int,      [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_read_float,    [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_read_double,   [:pointer, :pointer, :sf_count_t], :sf_count_t  
 
     # sf_count_t  sf_readf_short   (SNDFILE *sndfile, short *ptr, sf_count_t frames) ;
     # sf_count_t  sf_readf_int     (SNDFILE *sndfile, int *ptr, sf_count_t frames) ;
     # sf_count_t  sf_readf_float   (SNDFILE *sndfile, float *ptr, sf_count_t frames) ;
     # sf_count_t  sf_readf_double  (SNDFILE *sndfile, double *ptr, sf_count_t frames) ;
-    attach_function :sf_readf_short,   [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_readf_int,     [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_readf_float,   [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_readf_double,  [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
+    attach_function :sf_readf_short,   [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_readf_int,     [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_readf_float,   [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_readf_double,  [:pointer, :pointer, :sf_count_t], :sf_count_t  
 
     # sf_count_t  sf_write_short   (SNDFILE *sndfile, short *ptr, sf_count_t items) ;
     # sf_count_t  sf_write_int     (SNDFILE *sndfile, int *ptr, sf_count_t items) ;
     # sf_count_t  sf_write_float   (SNDFILE *sndfile, float *ptr, sf_count_t items) ;
     # sf_count_t  sf_write_double  (SNDFILE *sndfile, double *ptr, sf_count_t items) ;
-    attach_function :sf_write_short,   [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_write_int,     [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_write_float,   [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_write_double,  [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
+    attach_function :sf_write_short,   [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_write_int,     [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_write_float,   [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_write_double,  [:pointer, :pointer, :sf_count_t], :sf_count_t  
 
     # sf_count_t  sf_writef_short  (SNDFILE *sndfile, short *ptr, sf_count_t frames) ;
     # sf_count_t  sf_writef_int    (SNDFILE *sndfile, int *ptr, sf_count_t frames) ;
     # sf_count_t  sf_writef_float  (SNDFILE *sndfile, float *ptr, sf_count_t frames) ;
     # sf_count_t  sf_writef_double (SNDFILE *sndfile, double *ptr, sf_count_t frames) ;
-    attach_function :sf_writef_short,  [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_writef_int,    [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_writef_float,  [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
-    attach_function :sf_writef_double, [:pointer, :buffer_in, :sf_count_t], :sf_count_t  
+    attach_function :sf_writef_short,  [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_writef_int,    [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_writef_float,  [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_writef_double, [:pointer, :pointer, :sf_count_t], :sf_count_t  
 
     # sf_count_t  sf_read_raw      (SNDFILE *sndfile, void *ptr, sf_count_t bytes) ;
     # sf_count_t  sf_write_raw     (SNDFILE *sndfile, void *ptr, sf_count_t bytes) ;
-    attach_function :sf_read_raw,      [:pointer, :buffer_out, :sf_count_t], :sf_count_t  
-    attach_function :sf_write_raw,     [:pointer, :buffer_in,  :sf_count_t], :sf_count_t  
+    attach_function :sf_read_raw,      [:pointer, :pointer, :sf_count_t], :sf_count_t  
+    attach_function :sf_write_raw,     [:pointer, :pointer,  :sf_count_t], :sf_count_t  
 
     # const char* sf_get_string    (SNDFILE *sndfile, int str_type) ;
     # int         sf_set_string    (SNDFILE *sndfile, int str_type, const char* str) ;
