@@ -50,6 +50,10 @@ module Sndfile
       Encoding[@sfinfo[:format] & ENCODING_MASK]
     end
 
+    def endian
+      Endian[@sfinfo[:format] & ENDIAN_MASK]
+    end
+
     def frames
       @sfinfo[:frames]
     end

@@ -6,6 +6,7 @@ describe Sndfile do
     Sndfile::File.open(INPUTS_DIR + "ComputerMagic.wav") do |f|
       f.format.should == :WAV
       f.encoding.should == :PCM_16
+      f.endian.should == :FILE
       f.frames.should == 223451
       f.samplerate.should == 44100
       f.channels.should == 2
