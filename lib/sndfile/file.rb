@@ -29,8 +29,8 @@ module Sndfile
       @sfinfo = SfInfo.new
       if opts.mode == :WRITE or opts.format == :RAW
         @sfinfo[:format] = Enums::Format[opts.format]|Enums::Encoding[opts.encoding]|Enums::Endian[opts.endian]
-        @sfinfo[:channels] = opts.channels unless opts.mode == :READ or opts.format == :RAW
-        @sfinfo[:samplerate] = opts.samplerate unless opts.mode == :READ or opts.format == :RAW
+        @sfinfo[:channels] = opts.channels
+        @sfinfo[:samplerate] = opts.samplerate
       end
       @sfpointer = sf_open(path.to_s, opts.mode, @sfinfo)
       check_error
