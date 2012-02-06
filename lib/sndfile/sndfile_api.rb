@@ -1,4 +1,4 @@
-module Sndfile
+module Sndfile # :nodoc: all
   module SndfileApi
     extend FFI::Library
     include Enums
