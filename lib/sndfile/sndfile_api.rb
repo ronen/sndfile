@@ -29,7 +29,7 @@ module Sndfile
     attach_function :sf_seek,          [:pointer, :sf_count_t, :int], :sf_count_t  
 
     # int         sf_command       (SNDFILE *sndfile, int cmd, void *data, int datasize) ;
-    attach_function :sf_command,       [:pointer, :int, :pointer, :int], :int         
+    attach_function :sf_command,       [:pointer, Command, :pointer, :int], :int
 
     # int         sf_error         (SNDFILE *sndfile) ;
     # const char* sf_strerror      (SNDFILE *sndfile) ;

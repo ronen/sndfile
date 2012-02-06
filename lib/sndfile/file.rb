@@ -31,6 +31,8 @@ module Sndfile
       end
       @sfpointer = sf_open(path.to_s, opts.mode, @sfinfo)
       check_error
+      sf_command @sfpointer, :SFC_SET_CLIPPING, nil, 1
+      check_error
     end
 
     def close
