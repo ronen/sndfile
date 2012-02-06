@@ -17,7 +17,7 @@ module Sndfile
       opts = opts.keyword_args(:mode => { :valid => Enums::FileMode.symbols, :default => :READ },
                                :format => { :valid => Enums::Format.symbols, :default => :WAV },
                                :encoding => { :valid => Enums::Encoding.symbols, :default => :PCM_16 },
-                               :endian => { :valid => Enums::Endian.symbols, :default => :LITTLE },
+                               :endian => { :valid => Enums::Endian.symbols, :default => :FILE },
                                :samplerate => 44100,
                                :channels => 2,
                               )
