@@ -6,8 +6,11 @@ module Sndfile
     def self.open(path, opts={})
       file = new(path, opts)
       if block_given?
-        yield file
-        file.close
+        begin
+          yield file
+        ensure
+          file.close
+        end
       else
         file
       end
