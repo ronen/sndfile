@@ -43,3 +43,8 @@ See the [RDOC](http://rubydoc.info/gems/sndfile) for more info.
 
 History
 =======
+
+Release notes:
+
+* 0.1.1 - Clean up vestigial includes in integration test
+* 0.1.0 - Initial public release
