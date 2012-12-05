@@ -46,5 +46,7 @@ History
 
 Release notes:
 
+* 0.1.3 - Back to ruby-gsl-ng: memory leaks fixed
+* 0.1.2 - Use ruby-gsl-ngx to avoid memory leaks
 * 0.1.1 - Clean up vestigial includes in integration test
 * 0.1.0 - Initial public release
