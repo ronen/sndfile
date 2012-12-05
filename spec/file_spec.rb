@@ -14,7 +14,7 @@ describe Sndfile do
   end
 
   it "should raise an error when it can't open the file" do
-    expect { Sndfile::File.open("/no/such/file") }.should raise_error Sndfile::Error
+    expect { Sndfile::File.open("/no/such/file") }.to raise_error Sndfile::Error
   end
 
 end
