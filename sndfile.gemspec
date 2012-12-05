@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
     gem.version       = Sndfile::VERSION
 
     gem.add_dependency("ffi")
-    gem.add_dependency("ruby-gsl-ngx")  # depend on ruby-gsl-ngx instead of ruby-gsl-ng for now, for memory fix
+    gem.add_dependency("ruby-gsl-ng")
     gem.add_dependency("hash_keyword_args")
 
     gem.add_development_dependency 'rake'
