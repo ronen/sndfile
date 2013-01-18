@@ -8,7 +8,7 @@ module Sndfile # :nodoc: all
       :SF_ERR_UNRECOGNISED_FORMAT,  1,
       :SF_ERR_SYSTEM,               2,
       :SF_ERR_MALFORMED_FILE,       3,
-      :SF_ERR_UNSUPPORTED_ENCODING, 4,
+      :SF_ERR_UNSUPPORTED_ENCODING, 4
     )
       
 
@@ -16,7 +16,7 @@ module Sndfile # :nodoc: all
     FileMode = enum(
       :READ,  0x10,
       :WRITE,  0x20,
-      :RDWR,  0x30,
+      :RDWR,  0x30
     )
 
     # Major formats.
@@ -46,7 +46,7 @@ module Sndfile # :nodoc: all
       :WVE,           0x190000,     # Psion WVE format
       :OGG,           0x200000,     # Xiph OGG container
       :MPC2K,         0x210000,     # Akai MPC 2000 sampler
-      :RF64,          0x220000,     # RF64 WAV file
+      :RF64,          0x220000      # RF64 WAV file
     )
 
     # Subtypes from here on.
@@ -82,7 +82,7 @@ module Sndfile # :nodoc: all
       :DPCM_8,        0x0050,       # 8 bit differential PCM (XI only)
       :DPCM_16,       0x0051,       # 16 bit differential PCM (XI only)
 
-      :VORBIS,        0x0060,       # Xiph Vorbis encoding.
+      :VORBIS,        0x0060        # Xiph Vorbis encoding.
     )
 
     # Endian-ness options.
@@ -91,7 +91,7 @@ module Sndfile # :nodoc: all
       :FILE,          0x00000000,   # Default file endian-ness.
       :LITTLE,        0x10000000,   # Force little endian-ness.
       :BIG,           0x20000000,   # Force big endian-ness.
-      :CPU,           0x30000000,   # Force CPU endian-ness.
+      :CPU,           0x30000000    # Force CPU endian-ness.
     )
 
     # Command numbers for sf_command

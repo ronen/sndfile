@@ -18,7 +18,7 @@ end
 INPUTS_DIR = Pathname.new(__FILE__) + "../inputs"
 REFS_DIR = Pathname.new(__FILE__) + "../refs"
 OUTPUTS_DIR = Pathname.new(__FILE__) + "../outputs"
-Dir.mkdir(OUTPUTS_DIR) unless Dir.exist? OUTPUTS_DIR
+Dir.mkdir(OUTPUTS_DIR) unless File.directory? OUTPUTS_DIR
 
 def in_path(name)
   INPUTS_DIR + name
