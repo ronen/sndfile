@@ -42,7 +42,7 @@ module Sndfile
                                :encoding => { :valid => Enums::Encoding.symbols, :default => :PCM_16 },
                                :endian => { :valid => Enums::Endian.symbols, :default => :FILE },
                                :samplerate => 44100,
-                               :channels => 2,
+                               :channels => 2
                               )
 
       @path = path
