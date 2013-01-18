@@ -42,12 +42,18 @@ Here's a simple example, that reads an arbitrary source file and produces a WAV 
 
 See the [RDOC](http://rubydoc.info/gems/sndfile) for more info.
 
+Compatibility
+=============
+
+Currently works with ruby 1.8.7 and 1.9.3
+
 
 History
 =======
 
 Release notes:
 
+* TBD   - support ruby 1.8.7.  thanks to [youpy](https://github.com/youpy)
 * 0.1.3 - Back to ruby-gsl-ng: memory leaks fixed
 * 0.1.2 - Use ruby-gsl-ngx to avoid memory leaks
 * 0.1.1 - Clean up vestigial includes in integration test
