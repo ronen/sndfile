@@ -1,4 +1,7 @@
 #!/usr/bin/env rake
+
+task :default => :spec
+
 require "bundler/gem_tasks"
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|

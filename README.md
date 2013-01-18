@@ -1,5 +1,7 @@
 Libsndfile for Ruby
 -------------
+[![Build Status](https://travis-ci.org/ronen/sndfile.png)](https://travis-ci.org/ronen/sndfile)
+[![Dependency Status](https://gemnasium.com/ronen/sndfile.png)](https://gemnasium.com/ronen/sndfile)
 
 *sndfile* provides a fast and easy way to read, process, and write audio
 file data.  It wraps the [libsndfile](http://www.mega-nerd.com/libsndfile/)
