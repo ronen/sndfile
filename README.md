@@ -53,7 +53,7 @@ History
 
 Release notes:
 
-* TBD   - support ruby 1.8.7.  thanks to [youpy](https://github.com/youpy)
+* 0.2.0 - support ruby 1.8.7.  thanks to [youpy](https://github.com/youpy)
 * 0.1.3 - Back to ruby-gsl-ng: memory leaks fixed
 * 0.1.2 - Use ruby-gsl-ngx to avoid memory leaks
 * 0.1.1 - Clean up vestigial includes in integration test
