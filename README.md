@@ -64,6 +64,7 @@ History
 
 Release notes:
 
+* 1.1.0 - Add detail fields to Sndfile::Error
 * 1.0.0 - Add Sndfile::Info. Deprecate individual accessors.  No longer support ruby 1.8.7 
 * 0.2.0 - Support ruby 1.8.7.  Thanks to [youpy](https://github.com/youpy)
 * 0.1.3 - Back to ruby-gsl-ng: memory leaks fixed
