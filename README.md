@@ -56,7 +56,7 @@ See the [RDOC](http://rubydoc.info/gems/sndfile) for complete details
 Compatibility
 =============
 
-Currently works with ruby 1.8.7 and 1.9.3
+Known to work with MRI ruby 1.8.7, 1.9.3, and 2.0.0
 
 
 History
