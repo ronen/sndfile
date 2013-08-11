@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
     gem.add_dependency("ffi")
     gem.add_dependency("ruby-gsl-ng")
     gem.add_dependency("hash_keyword_args")
+    gem.add_dependency("key_struct")
 
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'

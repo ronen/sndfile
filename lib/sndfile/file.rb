@@ -3,6 +3,8 @@ module Sndfile
   class File
     include SndfileApi
 
+    attr_reader :info
+
     #
     # Without a block, this is the same as File.new(path, opts).
     # With a block, yields the File object to the block and ensures that
@@ -19,6 +21,13 @@ module Sndfile
       else
         file
       end
+    end
+
+    # Returns the `Info` for a file.  
+    #
+    # Equivalent to File.open(path) { |f| f.info }
+    def self.info(path)
+      open(path) { |f| f.info }
     end
 
     #
@@ -46,13 +55,15 @@ module Sndfile
                               )
 
       @path = path
-      @sfinfo = SfInfo.new
+      sfinfo = SfInfo.new
       if opts.mode == :WRITE or opts.format == :RAW
-        @sfinfo[:format] = Enums::Format[opts.format]|Enums::Encoding[opts.encoding]|Enums::Endian[opts.endian]
-        @sfinfo[:channels] = opts.channels
-        @sfinfo[:samplerate] = opts.samplerate
+        sfinfo[:format] = Enums::Format[opts.format]|Enums::Encoding[opts.encoding]|Enums::Endian[opts.endian]
+        sfinfo[:channels] = opts.channels
+        sfinfo[:samplerate] = opts.samplerate
       end
-      @sfpointer = sf_open(path.to_s, opts.mode, @sfinfo)
+      @sfpointer = sf_open(path.to_s, opts.mode, sfinfo)
+      @info = Info.from_sfinfo(sfinfo)
+
       check_error
       sf_command @sfpointer, :SFC_SET_CLIPPING, nil, 1
       check_error
@@ -65,90 +76,13 @@ module Sndfile
       check_error sf_close(@sfpointer)
     end
 
-    # Returns the format of the file, which is one of
-    #
-    #  :WAV           - Microsoft WAV format (little endian).
-    #  :AIFF          - Apple/SGI AIFF format (big endian).
-    #  :AU            - Sun/NeXT AU format (big endian).
-    #  :RAW           - RAW PCM data.
-    #  :PAF           - Ensoniq PARIS file format.
-    #  :SVX           - Amiga IFF / SVX8 / SV16 format.
-    #  :NIST          - Sphere NIST format.
-    #  :VOC           - VOC files.
-    #  :IRCAM         - Berkeley/IRCAM/CARL
-    #  :W64           - Sonic Foundry's 64 bit RIFF/WAV
-    #  :MAT4          - Matlab (tm) V4.2 / GNU Octave 2.0
-    #  :MAT5          - Matlab (tm) V5.0 / GNU Octave 2.1
-    #  :PVF           - Portable Voice Format
-    #  :XI            - Fasttracker 2 Extended Instrument
-    #  :HTK           - HMM Tool Kit format
-    #  :SDS           - Midi Sample Dump Standard
-    #  :AVR           - Audio Visual Research
-    #  :WAVEX         - MS WAVE with WAVEFORMATEX
-    #  :SD2           - Sound Designer 2
-    #  :FLAC          - FLAC lossless file format
-    #  :CAF           - Core Audio File format
-    #  :WVE           - Psion WVE format
-    #  :OGG           - Xiph OGG container
-    #  :MPC2K         - Akai MPC 2000 sampler
-    #  :RF64          - RF64 WAV file
-    def format
-      Format[@sfinfo[:format] & FORMAT_MASK]
+    Info.keys.each do |method|
+      define_method method do 
+        warn "[DEPRECATION]: Sndfile::File: `#{method}` is deprecated.  Use `info.#{method}` instead"
+        info.send method
+      end
     end
 
-    # Returns the encoding of the file data, which is one of:
-    #
-    #  :PCM_S8        - Signed 8 bit data
-    #  :PCM_16        - Signed 16 bit data
-    #  :PCM_24        - Signed 24 bit data
-    #  :PCM_32        - Signed 32 bit data
-    #  :PCM_U8        - Unsigned 8 bit data (WAV and RAW only)
-    #  :FLOAT         - 32 bit float data
-    #  :DOUBLE        - 64 bit float data
-    #  :ULAW          - U-Law encoded.
-    #  :ALAW          - A-Law encoded.
-    #  :IMA_ADPCM     - IMA ADPCM.
-    #  :MS_ADPCM      - Microsoft ADPCM.
-    #  :GSM610        - GSM 6.10 encoding.
-    #  :VOX_ADPCM     - Oki Dialogic ADPCM encoding.
-    #  :G721_32       - 32kbs G721 ADPCM encoding.
-    #  :G723_24       - 24kbs G723 ADPCM encoding.
-    #  :G723_40       - 40kbs G723 ADPCM encoding.
-    #  :DWVW_12       - 12 bit Delta Width Variable Word encoding.
-    #  :DWVW_16       - 16 bit Delta Width Variable Word encoding.
-    #  :DWVW_24       - 24 bit Delta Width Variable Word encoding.
-    #  :DWVW_N        - N bit Delta Width Variable Word encoding.
-    #  :DPCM_8        - 8 bit differential PCM (XI only)
-    #  :DPCM_16       - 16 bit differential PCM (XI only)
-    #  :VORBIS        - Xiph Vorbis encoding.
-    def encoding
-      Encoding[@sfinfo[:format] & ENCODING_MASK]
-    end
-
-    # Returns the endian-ness of the data, one of:
-    #
-    #  :FILE          - Default file endian-ness.
-    #  :LITTLE        - Force little endian-ness.
-    #  :BIG           - Force big endian-ness.
-    #  :CPU           - Force CPU endian-ness.
-    def endian
-      Endian[@sfinfo[:format] & ENDIAN_MASK]
-    end
-
-    # Returns the number of frames (samples) in the file
-    def frames
-      @sfinfo[:frames]
-    end
-
-    # Returns the sample rate, frames per second
-    def samplerate
-      @sfinfo[:samplerate]
-    end
-
-    # Returns the number of channels of data
-    def channels
-      @sfinfo[:channels]
-    end
 
     # Reads frames from the file, returning the data in a GSLng::Matrix of
     # dimensions frames x channels.  (For convenience, the height and width
@@ -162,14 +96,14 @@ module Sndfile
     # May raise Sndfile::Error in case of error.
     def read(nframes)
 
-      buf = GSLng::Matrix.new(nframes, channels)
+      buf = GSLng::Matrix.new(nframes, info.channels)
 
       count = sf_readf_double @sfpointer, buf.data_ptr, nframes
       check_error
       case count
       when 0 then nil
       when nframes then buf
-      else buf.view(0, 0, count, channels)
+      else buf.view(0, 0, count, info.channels)
       end
     end
 

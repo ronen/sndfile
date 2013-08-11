@@ -7,7 +7,7 @@ describe "Integration" do
     outpath, refpath = out_ref_paths("copy.wav")
 
     fin = Sndfile::File.open(inpath)
-    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.samplerate) do |fout|
+    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.info.samplerate) do |fout|
       while data = fin.read(12345)
         fout.write(data)
       end
@@ -21,13 +21,13 @@ describe "Integration" do
     outpath, refpath = out_ref_paths("mix.wav")
 
     fin1 = Sndfile::File.open(inpath1)
-    fin1.channels.should == 2
+    fin1.info.channels.should == 2
 
     fin2 = Sndfile::File.open(inpath2)
-    fin2.channels.should == 1
-    fin1.samplerate.should == fin2.samplerate
+    fin2.info.channels.should == 1
+    fin1.info.samplerate.should == fin2.info.samplerate
 
-    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin1.samplerate) do |fout|
+    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin1.info.samplerate) do |fout|
       while true
         a = fin1.read(10000)
         b = fin2.read(10000)
@@ -60,7 +60,7 @@ describe "Integration" do
     outpath, refpath = out_ref_paths("half.wav")
 
     fin = Sndfile::File.open(inpath)
-    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.samplerate) do |fout|
+    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => 2, :samplerate => fin.info.samplerate) do |fout|
       while data = fin.read(10000)
         fout.write(data * 0.5)
       end

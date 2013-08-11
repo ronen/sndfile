@@ -31,16 +31,27 @@ or, in a Gemfile
 
 Usage
 =====
+
 Here's a simple example, that reads an arbitrary source file and produces a WAV file at half the volume:
 
     fin = Sndfile::File.new(inpath)
-    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => fin.channels, :samplerate => fin.samplerate) do |fout|
+    Sndfile::File.open(outpath, :mode => :WRITE, :format => :WAV, :encoding => :PCM_16, :channels => fin.info.channels, :samplerate => fin.info.samplerate) do |fout|
       while data = fin.read(10000)
         fout.write(data * 0.5)
       end
     end
 
-See the [RDOC](http://rubydoc.info/gems/sndfile) for more info.
+The audio file info, available as `Sndfile::File#info` as per the above example, is an instance of `Sndfile::Info`.  You can also query it directly for a file:
+
+    info = Sndfile::File.info(filepath) #=> an instance of Sndfile::Info
+    #    => info.format
+    #    => info.encoding
+    #    => info.endian
+    #    => info.frames
+    #    => info.samplerate
+    #    => info.channels
+
+See the [RDOC](http://rubydoc.info/gems/sndfile) for complete details
 
 Compatibility
 =============
