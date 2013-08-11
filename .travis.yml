@@ -3,7 +3,6 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libffi-dev libffi-ruby libgsl0-dev libsndfile1-dev
 rvm:
-  - 1.8.7
   - 1.9.3
   - 2.0.0
 notifications:

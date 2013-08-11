@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
     gem.require_paths = ["lib"]
     gem.version       = Sndfile::VERSION
 
+    gem.required_ruby_version = ">= 1.9.2"
     gem.add_dependency("ffi")
     gem.add_dependency("ruby-gsl-ng")
     gem.add_dependency("hash_keyword_args")
