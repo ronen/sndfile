@@ -33,7 +33,11 @@ describe Sndfile::File do
   end
 
   it "raises an error when it can't open the file" do
-    expect { Sndfile::File.open("/no/such/file") }.to raise_error Sndfile::Error
+    expect { Sndfile::File.open("/no/such/file") }.to raise_error(Sndfile::Error) { |error|
+      error.description.should =~ /No such file/
+      error.code.should == :SF_ERR_SYSTEM
+      error.file.should == "/no/such/file"
+    }
   end
 
 end

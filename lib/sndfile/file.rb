@@ -125,10 +125,9 @@ module Sndfile
     def check_error(code = nil)
       code ||= sf_error(@sfpointer.null? ? nil : @sfpointer)
       if code != 0
-        msg = sf_strerror(@sfpointer.null? ? nil : @sfpointer)
-        msg += " (#{ErrorCode[code]})" if ErrorCode[code]
-        msg += " [#{@path}]"
-        raise Sndfile::Error, msg
+        raise Sndfile::Error.new(:description => sf_strerror(@sfpointer.null? ? nil : @sfpointer),
+                                 :code => ErrorCode[code],
+                                 :file => @path) 
       end
     end
 
