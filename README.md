@@ -71,3 +71,7 @@ Release notes:
 * 0.1.2 - Use ruby-gsl-ngx to avoid memory leaks
 * 0.1.1 - Clean up vestigial includes in integration test
 * 0.1.0 - Initial public release
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ronen/sndfile/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
